@@ -1,0 +1,7 @@
+.login__form {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 358px;
+  gap: 30px;
+}
