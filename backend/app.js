@@ -12,28 +12,26 @@ const auth = require('./middlewares/auth');
 const errorMiddleware = require('./middlewares/error');
 const { validateLogin, validateRegister } = require('./middlewares/validation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { cors }= require('./middlewares/cors');
 
 const app = express();
+
 const { PORT = 3000, PATH_MONGO = 'mongodb://127.0.0.1:27017/mestodbbbb' } = process.env;
-
 mongoose.set('strictQuery', false);
-
 mongoose.connect(PATH_MONGO, {
   useNewUrlParser: true,
 });
 
+app.use(cors);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(requestLogger);
 
 app.post('/signin', validateLogin, login);
 app.post('/signup', validateRegister, createUser);
-
 app.use(auth);
 app.use('/users', routerUsers);
 app.use('/cards', routerCards);
-
 app.use((req, res) => {
   res.status(NOT_FOUND).send({ message: 'Такой страницы не существует.' });
 });
