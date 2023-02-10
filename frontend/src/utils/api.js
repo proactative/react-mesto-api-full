@@ -100,7 +100,7 @@ class Api {
 }
 
 export const api = new Api(
-  'api.mesto.proactative.nomoredomainsclub.ru',
+  'https://api.mesto.proactative.nomoredomainsclub.ru',
   {
     authorization: '2d9ff2df-e659-4f7f-80c0-40ca2d274d7d',
     'Content-Type': 'application/json'
