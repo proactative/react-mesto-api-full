@@ -102,7 +102,7 @@ class Api {
 export const api = new Api(
   'https://api.mesto.proactative.nomoredomainsclub.ru',
   {
-    authorization: '2d9ff2df-e659-4f7f-80c0-40ca2d274d7d',
+    authorization: `Bearer ${localStorage.getItem("jwt")}`,
     'Content-Type': 'application/json'
   }
 );
