@@ -14,7 +14,7 @@ class Api {
   // 1 - loading user-info from the server
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers
+      headers: {...this._headers, authorization: `Bearer ${localStorage.getItem('jwt')}`}
     })
       .then(this._getResponse);
   }
@@ -22,7 +22,7 @@ class Api {
   // 2 - loading cards from the server
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers
+      headers: {...this._headers, authorization: `Bearer ${localStorage.getItem('jwt')}`}
     })
       .then(this._getResponse);
   }
@@ -31,7 +31,7 @@ class Api {
   editProfile(name, job) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {...this._headers, authorization: `Bearer ${localStorage.getItem('jwt')}`},
       body: JSON.stringify({
         name: name,
         about: job,
@@ -43,7 +43,7 @@ class Api {
   updateAvatar(link) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {...this._headers, authorization: `Bearer ${localStorage.getItem('jwt')}`},
       body: JSON.stringify({
         avatar: link,
       })
@@ -55,7 +55,7 @@ class Api {
   addCard(title, link) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {...this._headers, authorization: `Bearer ${localStorage.getItem('jwt')}`},
       body: JSON.stringify({ name: title, link: link })
     })
       .then(this._getResponse);
@@ -65,7 +65,7 @@ class Api {
   addLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'PUT',
-      headers: this._headers
+      headers: {...this._headers, authorization: `Bearer ${localStorage.getItem('jwt')}`}
     })
       .then(this._getResponse);
   }
@@ -73,17 +73,16 @@ class Api {
   deleteLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'DELETE',
-      headers: this._headers
+      headers: {...this._headers, authorization: `Bearer ${localStorage.getItem('jwt')}`}
     })
       .then(this._getResponse);
   }
 
   //11 task
   toggleLikeApi(cardId, isLiked) {
-    //alert(la)
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: `${isLiked ? "DELETE" : "PUT"}`,
-      headers: this._headers,
+      headers: {...this._headers, authorization: `Bearer ${localStorage.getItem('jwt')}`}
     })
       .then(this._getResponse)
   }
@@ -92,17 +91,15 @@ class Api {
   deleteCard(id) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: 'DELETE',
-      headers: this._headers
+      headers: {...this._headers, authorization: `Bearer ${localStorage.getItem('jwt')}`}
     })
       .then(this._getResponse);
   }
-
 }
 
 export const api = new Api(
   'https://api.mesto.proactative.nomoredomainsclub.ru',
   {
-    authorization: `Bearer ${localStorage.getItem("jwt")}`,
     'Content-Type': 'application/json'
   }
 );

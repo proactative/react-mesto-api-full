@@ -79,6 +79,7 @@ function App() {
         .then((res) => {
           if (res) {
             setUserEmail(res.data.email);
+            
             setLoggedIn(true);
             history.push("/");
           }
