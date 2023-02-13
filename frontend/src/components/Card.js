@@ -18,11 +18,11 @@ function Card({ card, onCardClick, onDeleteClick, onCardLike }) {
   const currentUser = useContext(CurrentUserContext);
 
   //for visibility delete-button
-  const isOwn = card.owner._id === currentUser._id;
+  const isOwn = card.owner === currentUser._id;
   const cardDeleteButtonClassName = isOwn ? 'element__delete-button_visible element__delete-button ' : 'element__delete-button';
 
   // for like-button 
-  const isLiked = card.likes.some(i => i._id === currentUser._id);
+  const isLiked = card.likes.some(i => i === currentUser._id);
   const cardLikeButtonClassName = isLiked ? 'element__like element__like_active' : 'element__like';
 
   return (
