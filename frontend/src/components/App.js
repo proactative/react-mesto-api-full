@@ -23,7 +23,7 @@ function App() {
   const [isConfirmDeletionPopupOpen, setIsConfirmDeletionPopupOpen] = React.useState(false);
   const [isInfoTooltipPopupOpen, setInfoTooltipPopupOpen] = React.useState(false);
   const [isRegisterSuccess, setIsRegisterSuccess] = React.useState(false);
-  const [deletionCardId, setDeletionCardId] = React.useState(null);
+  const [deletionCard, setDeletionCard] = React.useState(null);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '', _id: '', avatar: '' });
   const [cards, setCards] = React.useState([]);
@@ -121,8 +121,8 @@ function App() {
     setIsAddElementPopupOpen(true);
   }
 
-  function handleEConfirmDeletionClick(cardId) {
-    setDeletionCardId(cardId);
+  function handleEConfirmDeletionClick(card) {
+    setDeletionCard(card);
     setIsConfirmDeletionPopupOpen(true);
   }
 
@@ -200,10 +200,11 @@ function App() {
 
   function onConfirmDeletion() {
     //обновление api
-    console.log(deletionCardId)
-    api.deleteCard(deletionCardId)
+    
+    console.log(deletionCard._id)
+    api.deleteCard(deletionCard._id)
       .then(() => {
-        setCards((cards) => cards.filter((c) => c._id !== deletionCardId));
+        setCards((cards) => cards.filter((c) => c._id !== deletionCard._id));
         setIsConfirmDeletionPopupOpen(false);
       })
       .catch(err => console.log(err.message));

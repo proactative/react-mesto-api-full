@@ -12,7 +12,7 @@ function Card({ card, onCardClick, onDeleteClick, onCardLike }) {
   }
 
   function handleDeleteClick() {
-    onDeleteClick(card._id);
+    onDeleteClick(card);
   }
 
   const currentUser = useContext(CurrentUserContext);
