@@ -1,7 +1,7 @@
 const allowedCors = [
   'https://proactative.mesto.front.nomoredomainsclub.ru',
   'http://proactative.mesto.front.nomoredomainsclub.ru',
-  'localhost:3000',
+  'http://localhost:3000',
 ];
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 

@@ -38,14 +38,6 @@ const validateAvatarUpdate = celebrate(
   },
 );
 
-const validateToken = celebrate(
-  {
-    params: Joi.object().keys({
-      userId: Joi.string().hex().length(24),
-    }),
-  },
-);
-
 const validateCardCreate = celebrate(
   {
     body: Joi.object().keys({
@@ -58,7 +50,7 @@ const validateCardCreate = celebrate(
 const validateUserId = celebrate(
   {
     params: Joi.object().keys({
-      userId: Joi.string().hex().length(24),
+      userId: Joi.string().required().hex().length(24),
     }),
   },
 );
@@ -66,7 +58,7 @@ const validateUserId = celebrate(
 const validateCardId = celebrate(
   {
     params: Joi.object().keys({
-      cardId: Joi.string().hex().length(24),
+      cardId: Joi.string().required().hex().length(24),
     }),
   },
 );
@@ -76,7 +68,6 @@ module.exports = {
   validateRegister,
   validateProfileUpdate,
   validateAvatarUpdate,
-  validateToken,
   validateCardCreate,
   validateUserId,
   validateCardId,

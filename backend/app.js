@@ -13,11 +13,11 @@ const auth = require('./middlewares/auth');
 const errorMiddleware = require('./middlewares/error');
 const { validateLogin, validateRegister } = require('./middlewares/validation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { cors }= require('./middlewares/cors');
+const { cors } = require('./middlewares/cors');
 
 const app = express();
 
-const { PORT = 3000, PATH_MONGO = 'mongodb://127.0.0.1:27017/mestodbbbb' } = process.env;
+const { PORT = 3001, PATH_MONGO = 'mongodb://127.0.0.1:27017/mestodbbbb' } = process.env;
 mongoose.set('strictQuery', false);
 mongoose.connect(PATH_MONGO, {
   useNewUrlParser: true,

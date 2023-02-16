@@ -6,6 +6,8 @@ const ValidationError = require('../errors/validation-error');
 const ConflictError = require('../errors/conflict-error');
 const UnauthorisedError = require('../errors/unauthorized-error');
 
+const { JWT_SECRET = 'development-key' } = process.env;
+
 const login = (req, res, next) => {
   const { email, password } = req.body;
 
@@ -22,7 +24,7 @@ const login = (req, res, next) => {
       }
       const token = jwt.sign(
         { _id: user._id },
-        'some-secret-key',
+        JWT_SECRET,
         { expiresIn: '7d' },
       );
       return res.send({ token });
@@ -47,6 +49,7 @@ const getUserById = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new ValidationError('Переданы некорректные данные пользователя.'));
+        return;
       }
       next(err);
     });
@@ -54,7 +57,12 @@ const getUserById = (req, res, next) => {
 
 const getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
-    .then((user) => res.send(user))
+    .then((user) => {
+      if (user) {
+        return res.send(user);
+      }
+      throw new NotFoundError('Запрашиваемый пользователь не найден.');
+    })
     .catch(next);
 };
 
@@ -81,11 +89,13 @@ const createUser = (req, res, next) => {
     .catch((err) => {
       if (err.code === 11000) {
         next(new ConflictError('Пользователь с такой почтой уже зарегистрирован.'));
+        return;
       }
       if (err.name === 'ValidationError') {
         next(new ValidationError('Переданы некорректные данные пользователя.'));
+        return;
       }
-      return next(err);
+      next(err);
     });
 };
 
@@ -102,7 +112,7 @@ const updateUser = (req, res, next) => {
       throw new NotFoundError('Запрашиваемый пользователь не найден.');
     })
     .catch((err) => {
-      if (err.name === 'ValidationError' || err.name === 'CastError') {
+      if (err.name === 'CastError') {
         next(new ValidationError('Переданы некорректные данные пользователя.'));
       }
       return next(err);
